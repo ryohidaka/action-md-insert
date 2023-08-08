@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/ryohidaka/action-md-insert/issues"
   },
-  "homepage": "https://github.com/ryohidaka/action-md-insert#readme"
+  "homepage": "https://github.com/ryohidaka/action-md-insert#readme",
+  "dependencies": {
+    "typescript": "^5.1.6"
+  }
 }
