@@ -1,0 +1,22 @@
+{
+  "name": "action-md-insert",
+  "version": "0.0.1",
+  "description": "About GitHub Action that performs a insert other markdown into a markdown file.",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ryohidaka/action-md-insert.git"
+  },
+  "keywords": [
+    "actions",
+    "node",
+    "md"
+  ],
+  "author": "ryohidaka",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ryohidaka/action-md-insert/issues"
+  },
+  "homepage": "https://github.com/ryohidaka/action-md-insert#readme"
+}
