@@ -4,7 +4,8 @@
   "description": "About GitHub Action that performs a insert other markdown into a markdown file.",
   "main": "src/main.ts",
   "scripts": {
-    "build": "ncc build --license licenses.txt"
+    "build": "ncc build --license licenses.txt",
+    "test": "npx jest --testMatch '**/__test__/**/*.test.ts'"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,9 @@
     "typescript": "^5.1.6"
   },
   "devDependencies": {
-    "@types/node": "^20.4.8"
+    "@types/jest": "^29.5.3",
+    "@types/node": "^20.4.8",
+    "jest": "^29.6.2",
+    "ts-jest": "^29.1.1"
   }
 }
