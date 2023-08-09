@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/ryohidaka/action-md-insert#readme",
   "dependencies": {
+    "@actions/core": "^1.10.0",
     "@vercel/ncc": "^0.36.1",
     "typescript": "^5.1.6"
   },
