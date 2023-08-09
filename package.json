@@ -2,8 +2,10 @@
   "name": "action-md-insert",
   "version": "0.0.1",
   "description": "About GitHub Action that performs a insert other markdown into a markdown file.",
-  "main": "index.js",
-  "scripts": {},
+  "main": "src/main.ts",
+  "scripts": {
+    "build": "ncc build --license licenses.txt"
+  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/ryohidaka/action-md-insert.git"
@@ -20,6 +22,10 @@
   },
   "homepage": "https://github.com/ryohidaka/action-md-insert#readme",
   "dependencies": {
+    "@vercel/ncc": "^0.36.1",
     "typescript": "^5.1.6"
+  },
+  "devDependencies": {
+    "@types/node": "^20.4.8"
   }
 }
