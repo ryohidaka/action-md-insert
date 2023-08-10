@@ -1,6 +1,7 @@
 import { readdir, readFile } from "fs/promises";
 import { join } from "path";
 import { MdFiles } from "./types";
+import { writeFile } from "fs";
 
 /**
  * Retrieves the content of a file located at the specified path.
@@ -67,4 +68,29 @@ export const replaceCommentToMd = (
     (match, fileName) =>
       insertDatas.find((md) => md[fileName])?.[fileName] || match
   );
+};
+
+/**
+ * Writes data to the specified file.
+ *
+ * @param {string} data - The data to be written to the file.
+ * @param {string} outputFileName - The name of the output file.
+ */
+export const outputMarkdown = (data: string, outputFileName: string) => {
+  /**
+   * Callback function to handle file write completion.
+   *
+   * @param {NodeJS.ErrnoException | null} err - An error object if writing fails, or null if successful.
+   */
+  const writeCompletionCallback = (err: NodeJS.ErrnoException | null) => {
+    if (err) {
+      console.error(`Failed to write to ${outputFileName}:`, err);
+    } else {
+      console.log(
+        `Updated data has been written to ${outputFileName} successfully.`
+      );
+    }
+  };
+
+  writeFile(outputFileName, data, "utf8", writeCompletionCallback);
 };
