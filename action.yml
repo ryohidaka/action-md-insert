@@ -2,6 +2,15 @@ name: "Markdown Insert"
 description: "Inserts additional markdown content into a template markdown file."
 author: "ryohidaka"
 inputs:
+  template_path:
+    description: "Path to template md file."
+    required: true
+  src_dir:
+    description: "Path to directory of md files to insert."
+    required: true
+  dest_file:
+    description: "Destination file path for replaced file, including file name."
+    required: false
 runs:
   using: "node16"
   main: "dist/index.js"
