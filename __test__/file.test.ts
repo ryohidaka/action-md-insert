@@ -3,7 +3,8 @@ import { getTemplateFile, readMdFiles } from "../src/lib/file";
 describe("getTemplateFile", () => {
   it("should read and return file contents", async () => {
     const contents = await getTemplateFile("__test__/fixtures/template.md");
-    const templateContents = "# This is a template\n";
+    const templateContents =
+      "# This is a template\n<!-- file1.md -->\n<!-- file2.md -->\n";
 
     expect(contents).toEqual(templateContents);
   });

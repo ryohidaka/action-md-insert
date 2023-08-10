@@ -50,3 +50,21 @@ export const readMdFiles = async (dirPath: string): Promise<MdFiles> => {
     );
   }
 };
+
+/**
+ * Replaces comment placeholders in a template with corresponding content from insertDatas.
+ *
+ * @param {string} template - The template string containing comment placeholders.
+ * @param {MdFiles} insertDatas - An array of objects containing markdown content keyed by filenames.
+ * @returns {string} The template with comment placeholders replaced by actual content.
+ */
+export const replaceCommentToMd = (
+  template: string,
+  insertDatas: MdFiles
+): string => {
+  return template.replace(
+    /<!--\s*([a-zA-Z0-9_.-]+)\s*-->/g,
+    (match, fileName) =>
+      insertDatas.find((md) => md[fileName])?.[fileName] || match
+  );
+};
