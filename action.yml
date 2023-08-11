@@ -1,0 +1,10 @@
+name: "Markdown Insert"
+description: "Inserts additional markdown content into a template markdown file."
+author: "ryohidaka"
+inputs:
+runs:
+  using: "node16"
+  main: "dist/index.js"
+branding:
+  icon: "file-text"
+  color: "green"
