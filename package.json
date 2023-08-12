@@ -1,6 +1,6 @@
 {
   "name": "action-md-insert",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "About GitHub Action that performs a insert other markdown into a markdown file.",
   "main": "src/main.ts",
   "scripts": {
