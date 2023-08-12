@@ -26,7 +26,7 @@ About GitHub Action that inserts additional markdown content into a template mar
   with:
     template_path: "./template.md"
     src_dir: "./docs"
-    destFile: ./fullDoc.md
+    dest_file: ./fullDoc.md
 ```
 
 ## Inputs
