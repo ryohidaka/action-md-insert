@@ -12,14 +12,6 @@ About GitHub Action that inserts additional markdown content into a template mar
 
 4. Specify input parameters and execute the action.
 
-### Sample
-
-```md:template.md
-# This is a template
-<!-- file1.md -->
-<!-- file2.md -->
-```
-
 ```yml
 - name: Insert document files to template
   uses: ryohidaka/action-md-insert@v1
@@ -28,6 +20,57 @@ About GitHub Action that inserts additional markdown content into a template mar
     src_dir: "./docs"
     dest_file: ./fullDoc.md
 ```
+
+## Sample
+
+<details>
+<summary>Template Markdown File</summary>
+
+### template.md
+
+```md:template.md
+# This is a template
+<!-- file1.md -->
+<!-- file2.md -->
+```
+
+</details>
+
+<details>
+<summary>Input Markdown File</summary>
+
+### file1.md
+
+```md:file1.md
+## File1
+Contents of file1.md
+```
+
+### file2.md
+
+```md:file2.md
+## File2
+Contents of file2.md
+```
+
+</details>
+
+<details>
+<summary>Result</summary>
+
+### output.md
+
+```md:output.md
+# This is a template
+<!-- file1.md -->
+## File1
+Contents of file1.md
+<!-- file2.md -->
+## File2
+Contents of file2.md
+```
+
+</details>
 
 ## Inputs
 
@@ -46,3 +89,7 @@ About GitHub Action that inserts additional markdown content into a template mar
 ## Copyright and License
 
 © 2023 ryohidaka under the [MIT license](LICENSE.md).
+
+```
+
+```
