@@ -1,4 +1,4 @@
-import { insertContentAfterComments } from "../src/lib/file"; // Assuming the updated function name
+import { replaceContentBetweenComments } from "../src/lib/file";
 import { MdFiles } from "../src/lib/types";
 
 const INSERT_DATAS: MdFiles = [
@@ -6,33 +6,37 @@ const INSERT_DATAS: MdFiles = [
   { "file2.md": "Content of file2.md" },
 ];
 
-describe("insertContentAfterComments", () => {
-  it("should insert content after comment placeholders in the template", () => {
-    const template = "# Test\n<!-- file1.md -->\n<!-- file2.md -->";
+describe("replaceContentBetweenComments", () => {
+  it("should replace content between comment placeholders in the template", () => {
+    const template =
+      "# This is a template\n<!-- file1.md:START -->\n<!-- file1.md:END -->\n<!-- file2.md:START -->\n<!-- file2.md:END -->";
     const expectedOutput =
-      "# Test\n<!-- file1.md -->\nContent of file1.md\n<!-- file2.md -->\nContent of file2.md";
+      "# This is a template\n<!-- file1.md:START -->\n\nContent of file1.md\n\n<!-- file1.md:END -->\n<!-- file2.md:START -->\n\nContent of file2.md\n\n<!-- file2.md:END -->";
 
-    const result = insertContentAfterComments(template, INSERT_DATAS);
+    const result = replaceContentBetweenComments(template, INSERT_DATAS);
 
     expect(result).toEqual(expectedOutput);
   });
 
   it("should keep placeholders if content not found in insertDatas", () => {
-    const template = "# Test\n<!-- file1.md -->\n<!-- file3.md -->";
+    const template =
+      "# This is a template\n<!-- file1.md:START -->\n<!-- file1.md:END -->\n<!-- file3.md:START -->\n<!-- file3.md:END -->";
     const expectedOutput =
-      "# Test\n<!-- file1.md -->\nContent of file1.md\n<!-- file3.md -->";
+      "# This is a template\n<!-- file1.md:START -->\n\nContent of file1.md\n\n<!-- file1.md:END -->\n<!-- file3.md:START -->\n<!-- file3.md:END -->";
 
-    const result = insertContentAfterComments(template, INSERT_DATAS);
+    const result = replaceContentBetweenComments(template, INSERT_DATAS);
 
     expect(result).toEqual(expectedOutput);
   });
 
-  it("should not insert content if insertDatas is empty", () => {
-    const template = "# Test\n <!-- file1.md --> \n <!-- file2.md -->";
+  it("should not replace content if insertDatas is empty", () => {
+    const template =
+      "# This is a template\n <!-- file1.md:START --> \n <!-- file2.md:START -->";
     const insertDatas: MdFiles = [];
-    const expectedOutput = "# Test\n <!-- file1.md --> \n <!-- file2.md -->";
+    const expectedOutput =
+      "# This is a template\n <!-- file1.md:START --> \n <!-- file2.md:START -->";
 
-    const result = insertContentAfterComments(template, insertDatas);
+    const result = replaceContentBetweenComments(template, insertDatas);
 
     expect(result).toEqual(expectedOutput);
   });
