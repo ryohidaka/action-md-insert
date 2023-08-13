@@ -2802,7 +2802,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.outputMarkdown = exports.insertContentAfterComments = exports.readMdFiles = exports.getTemplateFile = void 0;
+exports.outputMarkdown = exports.replaceContentBetweenComments = exports.readMdFiles = exports.getTemplateFile = void 0;
 const promises_1 = __nccwpck_require__(292);
 const path_1 = __nccwpck_require__(17);
 const fs_1 = __nccwpck_require__(147);
@@ -2850,20 +2850,22 @@ const readMdFiles = (dirPath) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.readMdFiles = readMdFiles;
 /**
- * Inserts content from insertDatas after comment placeholders in a template.
+ * Replaces content between comment placeholders with content from insertDatas based on file names.
  *
  * @param {string} template - The template string containing comment placeholders.
  * @param {MdFiles} insertDatas - An array of objects containing markdown content keyed by filenames.
- * @returns {string} The template with content inserted after comment placeholders.
+ * @returns {string} The template with content replaced between comment placeholders.
  */
-const insertContentAfterComments = (template, insertDatas) => {
-    return template.replace(/<!--\s*([a-zA-Z0-9_.-]+)\s*-->/g, (match, fileName) => {
+const replaceContentBetweenComments = (template, insertDatas) => {
+    return template.replace(/<!--\s*([a-zA-Z0-9_.-]+):START\s*-->([\s\S]*?)<!--\s*\1:END\s*-->/g, (match, fileName) => {
         var _a;
         const content = (_a = insertDatas.find((md) => md[fileName])) === null || _a === void 0 ? void 0 : _a[fileName];
-        return content ? `${match}\n${content}` : match;
+        return content
+            ? `<!-- ${fileName}:START -->\n\n${content}\n\n<!-- ${fileName}:END -->`
+            : match;
     });
 };
-exports.insertContentAfterComments = insertContentAfterComments;
+exports.replaceContentBetweenComments = replaceContentBetweenComments;
 /**
  * Writes data to the specified file.
  *
@@ -2916,8 +2918,8 @@ function run() {
         const template = yield (0, file_1.getTemplateFile)(templatePath);
         // Get insert files.
         const insertFiles = yield (0, file_1.readMdFiles)(srcDir);
-        // Replaces comment placeholders in a template and inserts content after comments.
-        const replacedData = (0, file_1.insertContentAfterComments)(template, insertFiles);
+        // Replaces comment placeholders in a template and inserts content between comments.
+        const replacedData = (0, file_1.replaceContentBetweenComments)(template, insertFiles);
         // Output markdown file.
         (0, file_1.outputMarkdown)(replacedData, destFile);
     });

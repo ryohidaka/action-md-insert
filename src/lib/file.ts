@@ -53,21 +53,23 @@ export const readMdFiles = async (dirPath: string): Promise<MdFiles> => {
 };
 
 /**
- * Inserts content from insertDatas after comment placeholders in a template.
+ * Replaces content between comment placeholders with content from insertDatas based on file names.
  *
  * @param {string} template - The template string containing comment placeholders.
  * @param {MdFiles} insertDatas - An array of objects containing markdown content keyed by filenames.
- * @returns {string} The template with content inserted after comment placeholders.
+ * @returns {string} The template with content replaced between comment placeholders.
  */
-export const insertContentAfterComments = (
+export const replaceContentBetweenComments = (
   template: string,
   insertDatas: MdFiles
 ): string => {
   return template.replace(
-    /<!--\s*([a-zA-Z0-9_.-]+)\s*-->/g,
+    /<!--\s*([a-zA-Z0-9_.-]+):START\s*-->([\s\S]*?)<!--\s*\1:END\s*-->/g,
     (match, fileName) => {
       const content = insertDatas.find((md) => md[fileName])?.[fileName];
-      return content ? `${match}\n${content}` : match;
+      return content
+        ? `<!-- ${fileName}:START -->\n\n${content}\n\n<!-- ${fileName}:END -->`
+        : match;
     }
   );
 };

@@ -4,7 +4,7 @@ describe("getTemplateFile", () => {
   it("should read and return file contents", async () => {
     const contents = await getTemplateFile("__test__/fixtures/template.md");
     const templateContents =
-      "# This is a template\n<!-- file1.md -->\n<!-- file2.md -->\n";
+      "# This is a template\n\n<!-- file1.md:START -->\n<!-- file1.md:END -->\n\n<!-- file2.md:START -->\n<!-- file2.md:END -->\n";
 
     expect(contents).toEqual(templateContents);
   });
