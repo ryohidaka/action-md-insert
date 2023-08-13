@@ -2802,7 +2802,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.outputMarkdown = exports.replaceCommentToMd = exports.readMdFiles = exports.getTemplateFile = void 0;
+exports.outputMarkdown = exports.insertContentAfterComments = exports.readMdFiles = exports.getTemplateFile = void 0;
 const promises_1 = __nccwpck_require__(292);
 const path_1 = __nccwpck_require__(17);
 const fs_1 = __nccwpck_require__(147);
@@ -2850,16 +2850,20 @@ const readMdFiles = (dirPath) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.readMdFiles = readMdFiles;
 /**
- * Replaces comment placeholders in a template with corresponding content from insertDatas.
+ * Inserts content from insertDatas after comment placeholders in a template.
  *
  * @param {string} template - The template string containing comment placeholders.
  * @param {MdFiles} insertDatas - An array of objects containing markdown content keyed by filenames.
- * @returns {string} The template with comment placeholders replaced by actual content.
+ * @returns {string} The template with content inserted after comment placeholders.
  */
-const replaceCommentToMd = (template, insertDatas) => {
-    return template.replace(/<!--\s*([a-zA-Z0-9_.-]+)\s*-->/g, (match, fileName) => { var _a; return ((_a = insertDatas.find((md) => md[fileName])) === null || _a === void 0 ? void 0 : _a[fileName]) || match; });
+const insertContentAfterComments = (template, insertDatas) => {
+    return template.replace(/<!--\s*([a-zA-Z0-9_.-]+)\s*-->/g, (match, fileName) => {
+        var _a;
+        const content = (_a = insertDatas.find((md) => md[fileName])) === null || _a === void 0 ? void 0 : _a[fileName];
+        return content ? `${match}\n${content}` : match;
+    });
 };
-exports.replaceCommentToMd = replaceCommentToMd;
+exports.insertContentAfterComments = insertContentAfterComments;
 /**
  * Writes data to the specified file.
  *
@@ -2912,8 +2916,8 @@ function run() {
         const template = yield (0, file_1.getTemplateFile)(templatePath);
         // Get insert files.
         const insertFiles = yield (0, file_1.readMdFiles)(srcDir);
-        // Replaces comment placeholders in a template.
-        const replacedData = (0, file_1.replaceCommentToMd)(template, insertFiles);
+        // Replaces comment placeholders in a template and inserts content after comments.
+        const replacedData = (0, file_1.insertContentAfterComments)(template, insertFiles);
         // Output markdown file.
         (0, file_1.outputMarkdown)(replacedData, destFile);
     });
