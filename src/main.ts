@@ -1,9 +1,9 @@
 import { getInputParameter } from "./lib/action";
 import {
   getTemplateFile,
+  insertContentAfterComments,
   outputMarkdown,
   readMdFiles,
-  replaceCommentToMd,
 } from "./lib/file";
 
 async function run() {
@@ -16,8 +16,8 @@ async function run() {
   // Get insert files.
   const insertFiles = await readMdFiles(srcDir);
 
-  // Replaces comment placeholders in a template.
-  const replacedData = replaceCommentToMd(template, insertFiles);
+  // Replaces comment placeholders in a template and inserts content after comments.
+  const replacedData = insertContentAfterComments(template, insertFiles);
 
   // Output markdown file.
   outputMarkdown(replacedData, destFile);
